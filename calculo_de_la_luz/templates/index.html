@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Factura de Electricidad</title>
+</head>
+<body>
+    <h1>Cálculo de Factura de Electricidad por Familia</h1>
+    <form method="POST">
+        <label for="num_familias">Ingrese el número de familias en la casa:</label>
+        <input type="number" name="num_familias" required>
+        <br>
+        <label for="consumo_total_kwh">Ingrese el consumo total en kWh del recibo:</label>
+        <input type="number" name="consumo_total_kwh" required>
+        <br>
+        <div id="consumos">
+            <h3>Consumos por familia:</h3>
+            <div>
+                <label for="consumo_familia_1">Consumo en kWh de la familia 1:</label>
+                <input type="number" name="consumo_familia_1" required>
+            </div>
+        </div>
+        <button type="button" onclick="addInput()">Agregar Familia</button>
+        <br>
+        <button type="submit">Calcular</button>
+    </form>
+
+    {% if facturas %}
+    <h2>Resultados:</h2>
+    <ul>
+        {% for factura in facturas %}
+        <li>Factura: S/ {{ factura }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Total: S/ {{ total }}</h3>
+    {% endif %}
+
+    <script>
+        let count = 1;
+        function addInput() {
+            count++;
+            const div = document.createElement('div');
+            div.innerHTML = `<label for="consumo_familia_${count}">Consumo en kWh de la familia ${count}:</label>
+                             <input type="number" name="consumo_familia_${count}" required>`;
+            document.getElementById('consumos').appendChild(div);
+        }
+    </script>
+</body>
+</html>
